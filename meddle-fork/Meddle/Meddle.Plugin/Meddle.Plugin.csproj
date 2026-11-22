@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Dalamud.NET.Sdk/15.0.0">
     <PropertyGroup>
-        <Version>0.2.42</Version>
+        <Version>0.2.43</Version>
         <!-- Meddle (Soulweaver): its own name, so it can sit next to the official Meddle -->
         <AssemblyName>MeddleSoulweaver</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
