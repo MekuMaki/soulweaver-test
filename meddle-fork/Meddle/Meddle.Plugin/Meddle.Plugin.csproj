@@ -1,0 +1,46 @@
+﻿<Project Sdk="Dalamud.NET.Sdk/15.0.0">
+    <PropertyGroup>
+        <Version>0.2.39</Version>
+        <!-- Meddle (Soulweaver): its own name, so it can sit next to the official Meddle -->
+        <AssemblyName>MeddleSoulweaver</AssemblyName>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Meddle.Plugin</RootNamespace>
+        <LangVersion>14</LangVersion>
+        <TargetFramework>net10.0-windows</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+        <PackageReference Include="Vortice.Direct3D11" Version="3.8.1" />       
+        <Reference Include="OtterTex">
+            <HintPath>..\Meddle.Utils\Lib\OtterTex.dll</HintPath>
+        </Reference>
+        <PackageReference Update="DalamudPackager" Version="15.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Meddle.Utils\Meddle.Utils.csproj"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <Use_Custom_ClientStructs>false</Use_Custom_ClientStructs>
+        <CustomClientStructsPath>..\..\..\FFXIVClientStructs</CustomClientStructsPath>
+    </PropertyGroup>
+    <ItemGroup Condition="$(Use_Custom_ClientStructs) == false">
+        <Reference Include="InteropGenerator.Runtime" Private="false" />
+        <Reference Include="FFXIVClientStructs" Private="false" />
+    </ItemGroup>
+    <PropertyGroup Condition="$(Use_Custom_ClientStructs) == true">
+        <Use_Dalamud_FFXIVClientStructs>false</Use_Dalamud_FFXIVClientStructs>
+        <InteropGenerator_InteropNamespace>MeddlePlugin</InteropGenerator_InteropNamespace>
+        <DefineConstants>HAS_LOCAL_CS</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup Condition="$(Use_Custom_ClientStructs) == true">
+        <CompilerVisibleProperty Include="InteropGenerator_InteropNamespace" />
+        <ProjectReference Include="$(CustomClientStructsPath)\InteropGenerator\InteropGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <ProjectReference Include="$(CustomClientStructsPath)\FFXIVClientStructs\FFXIVClientStructs.csproj" Private="True" />
+        <ProjectReference Include="$(CustomClientStructsPath)\InteropGenerator.Runtime\InteropGenerator.Runtime.csproj" Private="True" />
+    </ItemGroup>
+</Project>

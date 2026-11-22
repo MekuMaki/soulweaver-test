@@ -1,0 +1,138 @@
+name: Release
+
+# Add a concurrency group incase a tag is created, deleted, and then recreated while a release is in progress.
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+# Only run this workflow when a tag is pushed when the tag starts with "v".
+on:
+    push:
+        tags:
+            - "v*"
+
+# So we can use the GitHub API to create releases with the run token.
+permissions:
+    contents: write
+
+jobs:
+    Release:
+      runs-on: ubuntu-latest
+      defaults:
+          run:
+              working-directory: Meddle/Meddle.Plugin/
+              shell: bash
+      env:
+          DALAMUD_HOME: /tmp/dalamud
+          IsCI: true
+      steps:
+          - name: Checkout Repository
+            uses: actions/checkout@v6
+            with:
+                submodules: true # Grab any submodules that may be required
+
+          - name: Setup .NET
+            uses: actions/setup-dotnet@v5
+            with:
+                dotnet-version: 10.0.x
+
+          - name: Extract version and custom path
+            run: |
+                tag=${{ github.ref_name }}
+                
+                # Check if tag matches custom branch pattern (v{version}_{custom_path})
+                if [[ $tag =~ ^v(.+)_(.+)$ ]]; then
+                    version="${BASH_REMATCH[1]}"
+                    download_path="${BASH_REMATCH[2]}"
+                # Check if tag matches the default pattern (v{version})
+                elif [[ $tag =~ ^v(.+)$ ]]; then
+                    version="${BASH_REMATCH[1]}"
+                    download_path=""
+                else
+                    echo "Tag format not recognized"
+                    exit 1
+                fi
+                
+                echo "VERSION=$version" >> $GITHUB_ENV
+                echo "DOWNLOAD_PATH=$download_path" >> $GITHUB_ENV
+                echo "Download Path: $download_path"
+                echo "Version: $version"
+  
+          - name: Download Dalamud Library
+            run: |
+                download_url="https://goatcorp.github.io/dalamud-distrib"
+                if [ ! -z "${{ env.DOWNLOAD_PATH }}" ]; then
+                    download_url="$download_url/${{ env.DOWNLOAD_PATH }}"
+                fi
+                download_url="$download_url/latest.zip"
+                echo "Downloading from: $download_url"
+                wget $download_url -O /tmp/dalamud.zip
+                unzip /tmp/dalamud.zip -d /tmp/dalamud  
+
+          - name: Restore Dependencies
+            run: dotnet restore
+
+          - name: Build plugin in release mode
+            run: |
+                echo "Building Meddle.Plugin version: ${{ env.VERSION }}"
+                dotnet build -c Release --no-restore --nologo -o ./bin/Release \
+                -p:Version=${{ env.VERSION }} \
+                -p:AssemblyVersion=${{ env.VERSION }} \
+                -p:FileVersion=${{ env.VERSION }}
+
+          - name: Generate Checksums & Export ApiLevel
+            working-directory: Meddle/Meddle.Plugin/bin/Release/Meddle.Plugin
+            run: |
+                sha512sum latest.zip >> checksums.sha512
+                dalamud_api_level=$(jq -r '.DalamudApiLevel' Meddle.Plugin.json)
+                echo "DALAMUD_API_LEVEL=$dalamud_api_level" >> $GITHUB_ENV
+                
+          - name: Create GitHub Release
+            uses: softprops/action-gh-release@v2
+            with:
+                files: |
+                    Meddle/Meddle.Plugin/bin/Release/Meddle.Plugin/latest.zip
+                    Meddle/Meddle.Plugin/bin/Release/Meddle.Plugin/checksums.sha512
+                prerelease: false # Releases cant be marked as prereleases as Dalamud wont be able to find them
+                append_body: true # Append the release notes to the release body
+                body_path: .github/release-notices.md # These notes are automatically added to the release body every time.
+                generate_release_notes: true # Automatically makes a release body from PRs since the last release.
+                fail_on_unmatched_files: true # If the files arent found, fail the workflow and abort the release.
+
+          - name: Upload Artifacts
+            uses: actions/upload-artifact@v6
+            with:
+                name: Release Artifacts
+                path: |
+                    Meddle/Meddle.Plugin/bin/Release/Meddle.Plugin/latest.zip
+                    Meddle/Meddle.Plugin/bin/Release/Meddle.Plugin/checksums.sha512
+
+          - name: Update repo.json
+            run: |
+                cd ../../
+
+                release_version="${{ env.VERSION }}"
+                echo "Release Version: $release_version"
+                repo_url="$(echo "${{ github.server_url }}/${{ github.repository }}" | sed 's/#/\\#/g')"
+                echo "Repo URL: $repo_url"
+                                
+                # Update the JSON file using jq
+                jq --arg release_version "$release_version" \
+                --arg repo_url "$repo_url/releases/download/${{ github.ref_name }}/latest.zip" \
+                '.[0].AssemblyVersion = $release_version |
+                .[0].TestingAssemblyVersion = $release_version |
+                .[0].DownloadLinkInstall = $repo_url |
+                .[0].DownloadLinkUpdate = $repo_url  |
+                .[0].DownloadLinkTesting = $repo_url |
+                .[0].DalamudApiLevel = '"${{ env.DALAMUD_API_LEVEL }}"' |
+                .[0].TestingDalamudApiLevel = '"${{ env.DALAMUD_API_LEVEL }}"'' \
+                repo.json > tmp.json && mv tmp.json repo.json
+                
+                cat repo.json
+                
+                git add repo.json                
+                git config --local user.name "github-actions [bot]"
+                git config --local user.email "github-actions@users.noreply.github.com"
+                git commit -m "Update repo.json for ${{ github.ref_name }}"
+                
+                git push origin HEAD:main
