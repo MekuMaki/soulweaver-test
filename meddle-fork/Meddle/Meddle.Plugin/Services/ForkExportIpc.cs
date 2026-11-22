@@ -1,5 +1,6 @@
-// PRIVATE FORK ONLY — never distributed. Lets the Soulweaver plugin trigger a
-// character export (same path as "Export All Models With Attaches") without UI.
+﻿// Meddle (Soulweaver): a fork of Meddle (AGPL-3.0), shipped with Soulweaver's test builds with its source, until
+// Soulweaver's own exporter replaces it. Lets the Soulweaver plugin trigger exports (characters, a rider without its
+// mount, a mount by itself, picked layout objects) without Meddle's window.
 using System.Text.Json;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Ipc;
@@ -300,5 +301,6 @@ public sealed unsafe class ForkExportIpc : IService, IDisposable
         exportProgress.UnregisterFunc();
         exportCharacter.UnregisterFunc();
         exportLayout.UnregisterFunc();
+        exportCharacterEx?.UnregisterFunc(); // never a call into an unloaded fork
     }
 }
