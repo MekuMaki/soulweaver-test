@@ -1,4 +1,4 @@
-# Soulweaver (test build 0.2.43.0)
+# Soulweaver (test build 0.2.44.0)
 
 Soulweaver links Final Fantasy XIV and Blender: send characters, mounts, the camera and world objects to Blender in
 one click, and pose and animate them live, in GPose and outside it. **Soulweaver Studio** is its Blender add-on.
@@ -8,7 +8,7 @@ one click, and pose and animate them live, in GPose and outside it. **Soulweaver
 ## Install (about two minutes)
 
 1. In game, open Dalamud settings > **Experimental** > **Custom Plugin Repositories** and add:
-   `https://raw.githubusercontent.com/MekuMaki/soulweaver-test/main/repo.json`
+   `https://raw.githubusercontent.com/MekuMaki/soulweaver-test/dev/repo.json`
    Tick the box, then **Save**.
 2. In the plugin installer, install **Soulweaver** and **Meddle (Soulweaver)**. Both are needed for now.
 3. Type `/soulweaver` in game. The first time you send something, Soulweaver finds Blender (5.2 or newer) and offers to
