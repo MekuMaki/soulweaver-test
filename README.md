@@ -1,4 +1,4 @@
-# Soulweaver (test build 0.2.53.0)
+# Soulweaver (test build 0.2.54.0)
 
 Soulweaver links Final Fantasy XIV and Blender: send characters, mounts, the camera and world objects to Blender in
 one click, and pose and animate them live, in GPose and outside it. **Soulweaver Studio** is its Blender add-on.
