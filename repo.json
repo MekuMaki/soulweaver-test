@@ -3,7 +3,7 @@
         "Author":  "Soulweaver",
         "Name":  "Soulweaver",
         "InternalName":  "Soulweaver",
-        "AssemblyVersion":  "0.2.62.0",
+        "AssemblyVersion":  "0.2.63.0",
         "Description":  "Right-click a character or use the GPose button to open them in Blender with Soulweaver Studio.",
         "ApplicableVersion":  "any",
         "Tags":  [
@@ -24,7 +24,7 @@
         "DownloadLinkTesting":  "https://raw.githubusercontent.com/MekuMaki/soulweaver-test/dev/plugins/Soulweaver/latest.zip",
         "RepoUrl":  "https://github.com/MekuMaki/soulweaver-test",
         "IsHide":  false,
-        "LastUpdate":  1795486370
+        "LastUpdate":  1795487403
     },
     {
         "Author":  "Ramen (Meddle), fork for Soulweaver",
@@ -51,6 +51,6 @@
         "DownloadLinkTesting":  "https://raw.githubusercontent.com/MekuMaki/soulweaver-test/dev/plugins/MeddleSoulweaver/latest.zip",
         "RepoUrl":  "https://github.com/MekuMaki/soulweaver-test",
         "IsHide":  false,
-        "LastUpdate":  1795486370
+        "LastUpdate":  1795487403
     }
 ]
