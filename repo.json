@@ -3,7 +3,7 @@
         "Author":  "Soulweaver",
         "Name":  "Soulweaver",
         "InternalName":  "Soulweaver",
-        "AssemblyVersion":  "0.2.87.0",
+        "AssemblyVersion":  "0.2.88.0",
         "Description":  "Right-click a character or use the GPose button to open them in Blender with Soulweaver Studio.",
         "ApplicableVersion":  "any",
         "Tags":  [
@@ -24,33 +24,6 @@
         "DownloadLinkTesting":  "https://raw.githubusercontent.com/MekuMaki/soulweaver-test/dev/plugins/Soulweaver/latest.zip",
         "RepoUrl":  "https://github.com/MekuMaki/soulweaver-test",
         "IsHide":  false,
-        "LastUpdate":  1795646636
-    },
-    {
-        "Author":  "Ramen (Meddle), fork for Soulweaver",
-        "Name":  "Meddle (Soulweaver)",
-        "InternalName":  "MeddleSoulweaver",
-        "AssemblyVersion":  "0.2.54.0",
-        "Description":  "A fork of Meddle (https://github.com/PassiveModding/Meddle, AGPL-3.0) that Soulweaver uses to export characters, mounts and layout objects to Blender. Its source is in the same repository as this plugin. It can sit next to the official Meddle.",
-        "ApplicableVersion":  "any",
-        "Tags":  [
-                     "xande",
-                     "model",
-                     "exporting"
-                 ],
-        "DalamudApiLevel":  15,
-        "LoadRequiredState":  0,
-        "LoadSync":  false,
-        "CanUnloadAsync":  false,
-        "LoadPriority":  0,
-        "IconUrl":  "https://github.com/PassiveModding/Meddle/raw/main/icon.png",
-        "Punchline":  "The exporter Soulweaver uses: a fork of Meddle. Install alongside Soulweaver.",
-        "AcceptsFeedback":  true,
-        "DownloadLinkInstall":  "https://raw.githubusercontent.com/MekuMaki/soulweaver-test/dev/plugins/MeddleSoulweaver/latest.zip",
-        "DownloadLinkUpdate":  "https://raw.githubusercontent.com/MekuMaki/soulweaver-test/dev/plugins/MeddleSoulweaver/latest.zip",
-        "DownloadLinkTesting":  "https://raw.githubusercontent.com/MekuMaki/soulweaver-test/dev/plugins/MeddleSoulweaver/latest.zip",
-        "RepoUrl":  "https://github.com/MekuMaki/soulweaver-test",
-        "IsHide":  false,
-        "LastUpdate":  1795646636
+        "LastUpdate":  1795647128
     }
 ]
