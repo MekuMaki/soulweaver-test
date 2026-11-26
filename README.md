@@ -1,4 +1,4 @@
-# Soulweaver (test build 0.2.112.0)
+# Soulweaver (test build 0.4.1.0)
 
 Soulweaver links Final Fantasy XIV and Blender: send characters, mounts, the camera and world objects to Blender in
 one click, and pose and animate them live, in GPose and outside it. **Soulweaver Studio** is its Blender add-on.
@@ -22,8 +22,8 @@ Updates come through Dalamud like any other plugin; Soulweaver Studio updates it
 | --- | --- | --- |
 | 1 | Testing and confirmation: Send to Blender in one click | Done |
 | 2 | The live link: GPose ⇄ Blender posing (Brio and Ktisis), Game / Layer / Blender control, Record, every character type, mounts, the camera link with depth of field, Multiselect and parallel sends | Done |
-| 3 | Soulweaver's own exporter, baked PBR textures, the new shader setup, the game's environment, sun and lights in Blender | **In progress** |
-| 4 | Rig templates | Later (the big one) |
+| 3 | Soulweaver's own exporter, baked PBR textures, the new shader setup, the game's environment, sun and lights in Blender | Done |
+| 4 | Rig templates | **In progress** (the big one) |
 | 5 | Extras: MCDF characters exported from GPose and loaded outside it, mod files, VFX, VRM export, NPR shaders, rendering an animation to image sequences, in-game render settings, the GPose gizmo | Later |
 
 ## Licence
