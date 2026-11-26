@@ -19,9 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-This license covers Soulweaver and Soulweaver Studio. Meddle (Soulweaver), the
-exporter fork distributed alongside them, is a fork of Meddle
-(https://github.com/PassiveModding/Meddle) and stays under Meddle's own
-license, the GNU AGPL-3.0; its source is in the meddle-fork folder of the
-release repository.
